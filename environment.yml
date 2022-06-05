@@ -1,0 +1,17 @@
+name: gofar
+dependencies:
+- python=3.8
+- cudatoolkit=10.1 # replace with your cuda version
+- cudnn=7
+- numpy=1.21.5
+- tqdm
+- cython
+- patchelf  # for mujoco_py
+- pip
+- pip:
+  - gym==0.17.3
+  - ipdb
+  - pyglib==0.1
+  - mujoco_py==2.0.2.13
+  - pyparsing==2.4.7
+  - wandb
