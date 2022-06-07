@@ -139,25 +139,22 @@
   <div class="container is-max-widescreen">
     <h2 class="title is-3">Goal-Conditioned F-Advantage Regression (GoFAR)</h2>
     <div class="columns is-centered">
-      <div class="column is-three-quarters">
-        <p>a novel regression-
-4 based offline GCRL algorithm derived from a state-occupancy matching perspec-
-5 tive; the key intuition is that the goal-reaching task can be formulated as a state-
-6 occupancy matching problem between a dynamics-abiding imitator agent and an
-7 expert agent that directly teleports to the goal (see Figure on the right.)</p>
+      <div class="column is-two-thirds">
+        <p>GoFAR is a novel regression-based offline GCRL algorithm derived from a state-occupancy matching perspective; the key intuition is that the goal-reaching task can be formulated as a state-occupancy matching problem between a dynamics-abiding imitator agent and an
+expert agent that directly teleports to the goal (see Figure on the right.)</p>
 
         <br>
         <p>Leveraging this intuition, we pose a f-divergence regularized optimization problem over valid policy occupancy distributions.
            This optimization problem is difficult to solve; however, its <span style="font-weight:bold">dual problem</span> is surprisingly simple and tractable. Therefore, we solve the dual problem and obtain the optimal (resp. converged) value function.
             A transformation of this optimal value function can be shown to be the optimal importance weights, using which we train the policy via supervised regression.</p>
       </div>
-      <div class="column is-one-quarter">
+      <div class="column is-one-third">
           <img src="./static/images/state-matching-concept-figure.png"/>
       </div>
     </div>
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
-        <img src="./static/images/goal-concept-figure.png" width="1500"/>
+        <img src="./static/images/gofar-concept-figure.png" width="1500"/>
       </div>
     </div>
 
