@@ -23,7 +23,7 @@ Here is a teaser video comparing GoFAR against state-of-art offline GCRL algorit
      pip install --upgrade numpy
      pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio===0.7.2 -f 
 2. (Optionally) install the [Robel](https://github.com/google-research/robel) environment for the D'Claw experiment.
-3. Download the offline dataset [here](https://drive.google.com/file/d/1WPorPDjS1ZRornhvxBlGlp_ZlZvWTO38/view?usp=sharing) and place ```/offline_data``` in the project root directory.
+3. Download the offline dataset [here](https://drive.google.com/file/d/1niq6bK262segc7qZh8m5RRaFNygEXoBR/view) and place ```/offline_data``` in the project root directory.
 
 ## Experiments
 We provide commands for reproducing the main GCRL results (Table 1), the ablations (Figure 3), and the stochastic offline GCRL experiment (Figure 4). 
