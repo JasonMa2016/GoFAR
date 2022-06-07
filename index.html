@@ -162,7 +162,7 @@ expert agent that directly teleports to the goal (see Figure on the right.)</p>
     <p>GoFAR does not train its policy until its value function has converged. This confers uninterleaved optimization that is more stable than prior actor-critic based methods in the offline setting. This feature enables GoFAR to obtain <span style="font-weight:bold">state-of-art</span> performance on a variety of offline goal-conditioned continuous control tasks.</p>
     <div class="columns is-centered has-text-centered">
       <div class="column is-fullwidth">
-        <img src="./static/images/offline-gcrl.png" width="900"/>
+        <img src="./static/images/offline-gcrl.png" width="600"/>
       </div>
     </div>
 
@@ -170,13 +170,13 @@ expert agent that directly teleports to the goal (see Figure on the right.)</p>
     <p>A distinct feature of GoFAR is that it does not utilize hindsight goal-relabeling (e.g., HER), a crucial component for all prior methods for credit assignment. In fact, GoFAR achieves optimal goal-weighting as a by-product of its dual optimization approach. </p>
     <div class="columns is-centered has-text-centered">
       <div class="column is-fullwidth">
-        <img src="./static/images/GoFARAblationStudies.png" width="900"/>
+        <img src="./static/images/ablations.png" width="600"/>
       </div>
     </div>
     <p> A consequence of GoFAR's relabeling-free optimization is that its performance is more robust in stochastic environments, in which hindsight relabeling suffers from "false positives". This observation is experimentally validated in the following experiment, in which we see that larger noise rates significantly hurt the baselines (which all use hindsight relabeling) more than GoFAR.</p>
     <div class="columns is-centered has-text-centered">
       <div class="column is-fullwidth">
-        <img src="./static/images/FetchReachNoise-DiscountedReturn.png" width="900"/>
+        <img src="./static/images/noise.png" width="600"/>
       </div>
     </div>
     <!-- <h3 class="title is-4"></h3>
