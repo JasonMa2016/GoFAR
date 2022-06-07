@@ -135,35 +135,42 @@
     </div>
     </section>
 
-<!-- <section class="section">
+<section class="section">
   <div class="container is-max-widescreen">
-    <h2 class="title is-3">Offline Goal-Conditioned RL as State-Occupancy Matching</h2>
+    <h2 class="title is-3">Goal-Conditioned F-Advantage Regression (GoFAR)</h2>
     <div class="columns is-centered">
       <div class="column is-three-quarters">
-        <p>Given an arbitrary human activity expressed in natural language, we desire a complete action plan. The action plan must only use a chosen-set of actions supported by a robotic agent. Furthermore, it must include all the <span style="color: orange; font-weight:bold">common-sense steps</span> that are often missed by humans.</p>
+        <p>a novel regression-
+4 based offline GCRL algorithm derived from a state-occupancy matching perspec-
+5 tive; the key intuition is that the goal-reaching task can be formulated as a state-
+6 occupancy matching problem between a dynamics-abiding imitator agent and an
+7 expert agent that directly teleports to the goal (see Figure on the right.)</p>
+
         <br>
-        <p>Although large language models (LLMs) such as GPT-3 and Codex, when prompted with an example, can produce very plausible action plans for complex human activities. Unfortunately, they often cannot be executed in the environment or may contain various linguistic ambiguities because they are expressed in free-form language.</p>
-        <p>In this paper, we propose several tools to improve executability of the produced action plans, which require no further training and thus is not tailored to a particular environment.</p>
+        <p>Leveraging this intuition, we pose a f-divergence regularized optimization problem over valid policy occupancy distributions.
+           This optimization problem is difficult to solve; however, its <span style="font-weight:bold">dual problem</span> is surprisingly simple and tractable. Therefore, we solve the dual problem and obtain the optimal (resp. converged) value function.
+            A transformation of this optimal value function can be shown to be the optimal importance weights, using which we train the policy via supervised regression.</p>
       </div>
       <div class="column is-one-quarter">
-        <video autoplay muted loop">
-          <source src="./static/images/example.mp4" type="video/mp4">
-        </video>
+          <img src="./static/images/state-matching-concept-figure.png"/>
+      </div>
+    </div>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <img src="./static/images/goal-concept-figure.png" width="1500"/>
       </div>
     </div>
 
     
-    <h3 class="title is-4">Admissible Action Translation</h3>
-    <p>For every generated action step, we first enumerate all actions achievable by an agent. Then the model output is translated to the most semantically-similar action achievable by the agent. In this work, we use similarity measure between sentence embeddings produced by a Sentence RoBERTa model, but other choices are shown to work similarly well. The translated action is appended to the existing prompt used to generate the next action step.</p>
+    <h3 class="title is-4">Uninterleaved Optimization</h3>
+    <p>GoFAR does not train its policy until its value function has converged. This confers uninterleaved optimization that is more stable than prior actor-critic based methods in the offline setting. This feature enables GoFAR to obtain <span style="font-weight:bold">state-of-art</span> performance on a variety of offline goal-conditioned continuous control tasks.</p>
     <div class="columns is-centered has-text-centered">
       <div class="column is-fullwidth">
-        <video autoplay muted loop width="80%">
-          <source src="./static/images/action-translation-animated.mp4" type="video/mp4">
-        </video>
+        <img src="./static/images/offline-gcrl.png" width="1500"/>
       </div>
     </div>
 
-    <h3 class="title is-4">Dyanmic Example Selection</h3>
+    <!-- <h3 class="title is-4">Dyanmic Example Selection</h3>
     <p>In the case that a dataset, or a handful of examples, is available, we can provide weak supervision to the model by prompting the model with an example that is similar to the query task. We re-use the same Sentence RoBERTa model for this purpose, but instead we measure similarity between the query task against all possible examples.</p>
     <div class="columns is-centered has-text-centered">
       <div class="column is-fullwidth">
@@ -171,7 +178,7 @@
           <source src="./static/images/dynamic-example-animated.mp4" type="video/mp4">
         </video>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>
 
@@ -245,8 +252,8 @@
       </div>
     </div>
   </div>
-  </div>
-</section> -->
+  </div> -->
+</section>
 
 <!-- <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
@@ -267,7 +274,8 @@
       <div class="content">
         <p>
           Website template is borrowed from <a
-            href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+            href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> and <a
+            href="https://wenlong.page/language-planner/">Language Planner</a>.
         </p>
       </div>
     </div>
