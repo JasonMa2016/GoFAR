@@ -1,8 +1,8 @@
 ## How Far I'll Go:</br>Offline Goal-Conditioned Reinforcement Learning via </br>f-Advantage Regression
 
-#### [[Project Page]](https://jasonma2016.github.io/GoFAR/) [[Paper]]()
+#### [[Project Page]](https://jasonma2016.github.io/GoFAR/) [[Paper]](https://arxiv.org/abs/2206.03023)
 
-[Jason Yecheng Ma](https://www.seas.upenn.edu/~jasonyma/)<sup>1</sup>, [Jason Yan]()<sup>1</sup>, [Dinesh Jayaraman](https://www.seas.upenn.edu/~dineshj/)<sup>1</sup>, [Osbert Bastani](https://obastani.github.io/)<sup>1</sup>
+[Jason Yecheng Ma](https://www.seas.upenn.edu/~jasonyma/)<sup>1</sup>, [Jason Yan](https://www.linkedin.com/in/jasyan/)<sup>1</sup>, [Dinesh Jayaraman](https://www.seas.upenn.edu/~dineshj/)<sup>1</sup>, [Osbert Bastani](https://obastani.github.io/)<sup>1</sup>
 
 <sup>1</sup>University of Pennsylvania
 
