@@ -46,16 +46,6 @@ class GoFAR(BaseAgent):
         self.actor_optim = torch.optim.Adam(self.actor_network.parameters(), lr=self.args.lr_actor)
         self.value_optim = torch.optim.Adam(self.value_network.parameters(), lr=self.args.lr_critic)
 
-        if self.args.use_explorer:
-            self.explorer_network = actor(env_params)
-            self.critic_network = critic(env_params)
-            
-            self.explorer_optim = torch.optim.Adam(self.explorer_network.parameters(), lr=self.args.lr_actor)
-            self.critic_optim = torch.optim.Adam(self.critic_network.parameters(), lr=self.args.lr_critic)
-            if self.args.cuda:
-                self.explorer_network.cuda()
-                self.critic_network.cuda() 
-
     # soft update
     def _soft_update(self):
         self._soft_update_target_network(self.actor_target_network, self.actor_network)
@@ -63,10 +53,7 @@ class GoFAR(BaseAgent):
 
     # this function will choose action for the agent and do the exploration
     def _stochastic_actions(self, input_tensor):
-        if self.args.use_explorer:
-            pi = self.explorer_network(input_tensor)
-        else: 
-            pi = self.actor_network(input_tensor)
+        pi = self.actor_network(input_tensor)
         action = pi.cpu().numpy().squeeze()
         # add the gaussian
         action += self.args.noise_eps * self.env_params['action_max'] * np.random.randn(*action.shape)
@@ -79,10 +66,7 @@ class GoFAR(BaseAgent):
         return action
     
     def _deterministic_action(self, input_tensor):
-        if self.args.use_explorer:
-            action = self.explorer_network(input_tensor)
-        else: 
-            action = self.actor_network(input_tensor)
+        action = self.actor_network(input_tensor)
         return action
 
     def _update_discriminator(self, future_p=None):
@@ -202,33 +186,19 @@ class GoFAR(BaseAgent):
             v_loss1 = torch.log(torch.mean(torch.exp(e_v)))
         value_loss = (v_loss0 + v_loss1).mean()
 
-        if self.args.use_explorer:
-            actions_explorer = self.explorer_network(inputs_norm_tensor)
-            # explorer_loss = -torch.log(self.critic_network(inputs_norm_tensor, actions_explorer)).mean()
-            explorer_loss = - self.critic_network(inputs_norm_tensor, actions_explorer).mean()
+        # Compute policy loss (L2 because Gaussian with fixed sigma)
+        if self.args.f == 'chi':
+            w_e = torch.relu(e_v + 1).detach()
+        elif self.args.f == 'kl':
+            w_e = torch.clamp(torch.exp(e_v.detach()), 0, 10)
+        actions_real = self.actor_network(inputs_norm_tensor)
+        actor_loss = torch.mean(w_e * torch.square(actions_real - actions_tensor))
 
-            self.explorer_optim.zero_grad()
-            explorer_loss.backward()
-            self.explorer_optim.step() 
-
-            critic_loss = (e_v.detach() - self.critic_network(inputs_norm_tensor, actions_tensor)).pow(2).mean()
-            self.critic_optim.zero_grad()
-            critic_loss.backward()
-            self.critic_optim.step()
-        else:
-            # Compute policy loss (L2 because Gaussian with fixed sigma)
-            if self.args.f == 'chi':
-                w_e = torch.relu(e_v + 1).detach()
-            elif self.args.f == 'kl':
-                w_e = torch.clamp(torch.exp(e_v.detach()), 0, 10)
-            actions_real = self.actor_network(inputs_norm_tensor)
-            actor_loss = torch.mean(w_e * torch.square(actions_real - actions_tensor))
-
-            # update the actor network
-            self.actor_optim.zero_grad()
-            actor_loss.backward()
-            sync_grads(self.actor_network)
-            self.actor_optim.step()
+        # update the actor network
+        self.actor_optim.zero_grad()
+        actor_loss.backward()
+        sync_grads(self.actor_network)
+        self.actor_optim.step()
 
         # update the value_network
         self.value_optim.zero_grad()
