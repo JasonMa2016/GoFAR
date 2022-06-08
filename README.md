@@ -21,7 +21,7 @@ Here is a teaser video comparing GoFAR against state-of-art offline GCRL algorit
      conda env create -f environment.yml
      conda activate gofar
      pip install --upgrade numpy
-     pip install torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio===0.7.2 -f 
+     pip install torch==1.10.0 torchvision==0.11.1 torchaudio===0.10.0 gym==0.17.3
 2. (Optionally) install the [Robel](https://github.com/google-research/robel) environment for the D'Claw experiment.
 3. Download the offline dataset [here](https://drive.google.com/file/d/1niq6bK262segc7qZh8m5RRaFNygEXoBR/view) and place ```/offline_data``` in the project root directory.
 
@@ -51,7 +51,7 @@ Note that ```gofar``` defaults to not using HER, so this command is only relevan
 
 3. The following command will run the stochastic environment experiment (Figure 4):
 ```
-mpirun -np 1 python train.py --env FetchReach --method $METHOD --noise True --noise_eps $NOISE_EPS
+mpirun -np 1 python train.py --env FetchReach --method $METHOD --noise True --noise-eps $NOISE_EPS
 ```
 where ```$NOISE_EPS``` can be chosen from ```0.5, 1.0, 1.5```.
 
