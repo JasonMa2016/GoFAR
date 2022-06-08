@@ -176,8 +176,10 @@ expert agent that directly teleports to the goal (see Figure on the right.)</p>
     <p> A consequence of GoFAR's relabeling-free optimization is that its performance is more robust in stochastic environments, in which hindsight relabeling suffers from "false positives". This observation is experimentally validated in the following experiment, in which we see that larger noise rates significantly hurt the baselines (which all use hindsight relabeling) more than GoFAR.</p>
     <div class="columns is-centered has-text-centered">
       <div class="column is-fullwidth">
-        <img src="./static/images/noise.png" width="600"/>
+        <img src="./static/images/noise.png" width="400"/>
+        <h5>Noise Rate.</h5>
       </div>
+
     </div>
     <h3 class="title is-4">Zero-Shot Goal-Conditioned Plan Transfer</h3>
     <p>GoFAR's value function objective, assuming deterministic transitions, does not depend on the action labels. Therefore, we can use it to train an agent-independent <span style="font-weight:bold">goal-centric</span> value function, and zero-shot transfer to a new target domain as a hierarchical planner. 
