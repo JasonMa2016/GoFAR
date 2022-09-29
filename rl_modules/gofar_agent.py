@@ -10,7 +10,6 @@ from rl_modules.base_agent import BaseAgent
 from rl_modules.models import actor, critic, value
 from rl_modules.discriminator import Discriminator
 
-torch.autograd.set_detect_anomaly(True)
 
 """
 GoFAR (Goal-conditioned f-Advantage Regression)
