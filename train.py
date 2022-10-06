@@ -1,12 +1,11 @@
 import argparse
 import numpy as np
 import gym
-import panda_gym
 
-import os, sys
+import os
 from mpi4py import MPI
 from envs import register_envs
-from envs.multi_world_wrapper import TimeLimit, NoisyAction
+from envs.multi_world_wrapper import NoisyAction
 from rl_modules.actionablemodel_agent import ActionableModel
 from rl_modules.ddpg_agent import DDPG
 from rl_modules.gofar_agent import GoFAR
@@ -14,7 +13,7 @@ from rl_modules.gcsl_agent import GCSL
 
 import random
 import torch
-import wandb 
+import wandb
 
 """
 train the agent, the MPI part code is copy from openai baselines(https://github.com/openai/baselines/blob/master/baselines/her)
@@ -124,7 +123,6 @@ def get_method_params(args):
 
     if 'gcsl' in args.method or 'AM' in args.method:
         args.relabel_percent = 1.0
-        assert(not args.shuffle)
     if 'gcbc' in args.method:
         args.relabel = False 
     if 'gofar' in args.method:

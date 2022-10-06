@@ -97,6 +97,9 @@ class GCSL(BaseAgent):
             actions_tensor = actions_tensor.cuda()
             r_tensor = r_tensor.cuda()
 
+        # Compute the actions
+        actions_real = self.actor_network(inputs_norm_tensor)
+
         # calculate the target Q value function
         if self.args.method == 'wgcsl' or self.args.method == 'wgcbc':
             offset = sample_batch['future_offset']
@@ -114,15 +117,18 @@ class GCSL(BaseAgent):
 
             # the q loss
             real_q_value = self.critic_network(inputs_norm_tensor, actions_tensor)
-            adv = (target_q_value - real_q_value)
-            critic_loss = adv.pow(2).mean()
+            critic_loss = (target_q_value - real_q_value).pow(2).mean()
 
-            adv = torch.clamp(torch.exp(adv.detach()), 0, 10)
+            # Compute the advantage weighting
+            with torch.no_grad():
+                v = self.critic_network(inputs_norm_tensor, actions_real)
+                v = torch.clamp(v, -clip_return, 0)
+                adv = target_q_value - v
+                adv = torch.clamp(torch.exp(adv.detach()), 0, 10)
             weights = weights * adv
         else:
             weights = torch.ones(actions_tensor.shape).to(actions_tensor.device)
         
-        actions_real = self.actor_network(inputs_norm_tensor)
         actor_loss = torch.mean(weights * torch.square(actions_real - actions_tensor))
 
         # update the actor network
